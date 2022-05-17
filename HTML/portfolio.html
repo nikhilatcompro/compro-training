@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        .imgandintro {
+            align-items: center;
+            background-color: antiquewhite;
+            margin: 30px;
+            padding: 30px;
+        }
+ 
+        .nikhilimg {
+            width: 250px;
+            height: auto;
+        }
+
+        header {
+            position: fixed;
+            top: 0px;
+            background-color: #55d6aa;
+        }
+
+        nav ul {
+            
+            padding: 10px;
+            list-style: none;
+        }
+
+        nav li {
+            display: inline-block;
+            margin-left: 70px;
+        }
+
+       nav a {
+           color: #444;
+           text-decoration: none;
+           text-transform: uppercase;
+           text-decoration: solid;
+       }
+        
+    </style>
+    <title>Portfolio</title>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="#imgandintro">About Me</a></li>
+                <li><a href="#education">Education</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#curricular">Co-curricular</a></li>
+                <li><a href="#suggestions">Suggestions</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div id="imgandintro" class="imgandintro">
+        <img class="nikhilimg" src="./nikhil.png">
+        <br>
+        <h3>Nikhil Chauhan</h3>
+        <br>
+        <p id="aboutme">Hello there! My name is Nikhil and I am a fourth year IT undergrad at Guru Tegh
+            Bahadur Institute of Technology, New Delhi. I am well versed in Python, C++ and Java.
+            I have keen interest in the field of Machine Learning and Computer Vision and I have made 
+            some projects on these topics to show my skills. I love building products while working in teams. </p>
+    </div>
+    <br>
+    <br>
+    
+    <div id="education">
+        <h2>Education</h2>
+        <table>
+            <tr>
+                <td><p>Guru Gobind singh Indraprastha University</p>
+                    <sub>Bachelor of Technology</sub>
+                </td>
+                <td>2018-ongoing</td>
+            </tr>
+            <tr>
+                <td><p>Kendriya Vidyalaya Tagore Garden</p>
+                    <sub>Senior Secondary School</sub>
+                </td>
+                <td>2018</td>
+            </tr>
+            <tr>
+                <td><p>Kendriya Vidyalaya Rajkot</p>
+                    <sub>Secondary School</sub>
+                </td>
+                <td>2016</td>
+            </tr>
+
+        </table>
+    </div>
+    <br>
+    <br> <!--try to minimize the use of br tag-->
+    <div id="projects">
+        <h2>Projects</h2>
+        <table>
+            <tr>
+                <td>
+                    <p>CarPredoPedia: end-to-end car price prediction website
+                    (12/2021 - 01/2022)</p>
+                    <sub>around 22,000 records were analyzed to create a model that can predict the 
+                        right value of your car by taking into consideration it's attributes.
+                    </sub> 
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p>Gesture volume control (06/2021 - 06/2021)</p>
+                    <sub>the tool uses Mediapipe library to track hand gestures which in
+                        turn changes the volume of the system. 
+                    </sub> 
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p>Runs predictor (05/2021 - 05/2021)</p>
+                    <sub>a dataset containing 1,50,000 records was cleaned, analyzed and modified to train a lasso-regression model.
+                        the program reads the runs of first 5 overs and predict the runs of
+                        6th over.
+                    </sub> 
+                </td>
+            </tr>
+        </table>
+    </div>
+    <br>
+    <br>
+    <div id="curricular">
+        <h2>Co-curricular</h2>
+        <br>
+        <ul>
+            <li>
+                participated in NASA-zooniverse's citizen scientist program. marked around 30 observations.
+            </li>
+            <li>
+                helped organize the GTBIT TEdx event
+            </li>
+            <li>
+                placed 5th in inter-college Table Tennis competition
+            </li>
+        </ul>
+    </div>
+    <br>
+    <br>
+    <footer >
+    <div id="suggestions">
+        <h2>Suggestions</h2>
+        <form>
+            <label for="name">Name</label><br>
+            <input type="text" id="name" name="name"><br>
+            <label for="email">Email address</label><br>
+            <input type="text" id="email" name="email"><br>
+            <label for="suggestion">Suggestion</label><br>
+            <input type="text" id="suggestion" name="suggestion">
+        </form>
+    </div>
+    </footer>
+</body>
+</html>
