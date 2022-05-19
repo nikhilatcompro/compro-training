@@ -1,22 +1,58 @@
+body {
+    background-color: gray;
+}
 .container {
     padding: 10px 10px 10px 10px;
-    border: 1px solid rgb(159, 243, 235);
+    border: 30px solid rgb(246, 196, 196);
+    width: 300px;
+    height: 300px;
+    /*text-align: center;*/
+    margin: auto;
     display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    align-items: flex-end;
     align-content: space-between;
 }
 
-ul {
-    align-content: center;
-    padding-inline-start: 0;
-    width: 25%;
-    height: auto;
-    display: flex;
-
+.container__item {
+    padding: 30px 10px 10px 10px;
+    background-color: aquamarine;
+    border-radius: 10px;
+    margin: 10px;
+    width: 60px;
+    height: 40px;
+    flex-basis: auto;
+    text-align: center;
 }
 
-.list__item {
-    list-style: none;
-    padding: 5px 5px 5px 5px;
-    border: 7px solid rgb(11, 26, 80);
-    background-color: antiquewhite;
+
+
+.image-container {
+    border:10px solid rgb(159, 243, 235);
+    position: fixed;
+    bottom:0;
+    right:0;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+.plant-image {
+    width: 300px;
+    height: auto;
+    /*position: fixed;
+    bottom: 0;
+    right: 0;*/
+    padding: 10px 10px 10px 10px;
+    
+}
+
+.car-image {
+    width: 600px;
+    height: auto;
+    float: left;
+}
+
+p {
+    text-align: center;
 }
