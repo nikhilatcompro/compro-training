@@ -129,7 +129,7 @@ a {
 }
 
 .body__learn-more {
-  color: gray;
+  color: #565454;
 }
 
 /*------------login footer--------------*/
@@ -180,6 +180,7 @@ a {
 }
 
 .help-menu__language > select {
+  font-size: 0.75rem;
   border: none;
 }
 
@@ -193,7 +194,7 @@ a {
       -ms-flex-direction: row;
           flex-direction: row;
   font-weight: bold;
-  font-size: 0.78rem;
+  font-size: 0.75rem;
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
