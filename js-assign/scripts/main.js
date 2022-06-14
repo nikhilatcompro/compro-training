@@ -114,7 +114,4 @@ priceButton.addEventListener("click", (event) => {
   console.log(price);
   searchByPrice(price);
 });
-// idButton = document.getElementById("btn-search-id");
-// idButton.addEventListener("click", ()=>{
 
-// })
