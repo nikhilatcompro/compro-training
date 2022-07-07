@@ -37,28 +37,25 @@
        * is clicked. Emits an event List.vue
        * component with a payload 'id'.
        * @param {number} id - user id
-       * @returns {void}
        */
       onDeleteClick (id) {
+        this.$store.commit('deleteUser', id);
         EventBus.$emit('delete-user', id);
       },
       /**
-       * gets triggered when Edit button
+       * A method that gets triggered when Edit button
        * is clicked. Emits an event to Form.vue
        * component with payload 'user'.
        * @param {user} user - user object
-       * @returns {void}
        */
       onEditClick (user) {
         EventBus.$emit('edit-user', user);
       },
       /**
-       * gets triggered when Back button
+       * A method that gets triggered when Back button
        * is clicked. Emits an event to
        * List.vue which removes the ShowUser
        * component from DOM.
-       * @param {void}
-       * @returns {void}
        */
       onBackClick () {
         this.$emit('back-click');
