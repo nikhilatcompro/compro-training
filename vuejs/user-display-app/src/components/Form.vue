@@ -18,50 +18,21 @@
 <script>
   import EventBus from '../event-bus.js';
   export default {
-    name: 'user-form',
+    name: 'userForm',
     data () {
       return {
-        /**
-         * date of birth
-         * @type {string}
-         */
         dob: '',
-        /**
-         * variable to conditionally
-         * display invalid date
-         * @type {boolean}
-         */
         dobError: false,
-        /**
-         * variable to conditionally
-         * switch between Update and Submit
-         * button
-         * @type {boolean}
-         */
         editingUser: false,
-        /**
-         * user email
-         * @type {string}
-         */
         email: '',
-        /**
-         * user id
-         * @type {number}
-         */
         id: 0,
-        /**
-         * user name
-         * @type {string}
-         */
         name: ''
       };
     },
     methods: {
       /**
-       * utility method that validates the date of birth and
+       * Utility method that validates the date of birth and
        * sets the dobError data property as true or false
-       * @param {void}
-       * @returns {void}
        */
       validateDob () {
         const [day, month, year] = this.dob.split('/').map(item => parseInt(item));
@@ -76,19 +47,15 @@
        * A method that gets triggered when the
        * Cancel button is clicked on app.
        * Emits an event to parent on click.
-       * @param {void}
-       * @returns {void}
        */
       onBackClick () {
         this.$emit('back-click'); // event back-click is also used in ShowUser.vue
       },
       /**
-       * a method that gets triggered when
+       * A method that gets triggered when
        * the user-form is submitted. It creates
        * a new entry and sends it to the list
        * component with the help of event bus.
-       * @param {void}
-       * @returns {void}
        */
       onSubmitClick () {
         const newEntry = {
@@ -97,15 +64,14 @@
           email: this.email,
           dob: this.dob
         };
-        EventBus.$emit('user-generated', newEntry);
+        this.$store.commit('addUser', newEntry);
+        this.$emit('user-added');
       },
       /**
-       * gets triggered when the update button
+       * A method that gets triggered when the update button
        * on user-form in clicked. Sends the edited
        * values to the List.vue component and
        * changes the update button to submit button.
-       * @param {void}
-       * @returns {void}
        */
       onUpdateClick () {
         const editedValues = {
@@ -114,8 +80,9 @@
           email: this.email,
           dob: this.dob
         };
-        EventBus.$emit('values-edited', editedValues);
+        this.$store.commit('updateUser', editedValues);
         this.editingUser = false;
+        this.$emit('user-edited');
       }
     },
     mounted () {

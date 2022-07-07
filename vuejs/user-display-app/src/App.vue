@@ -14,41 +14,37 @@
 </template>
 
 <script>
-  import Form from './components/Form.vue';
-  import List from './components/list.vue';
+  import userForm from './components/Form.vue';
+  import userList from './components/List.vue';
   import ShowUser from './components/ShowUser.vue';
   export default {
     name: 'app',
     components: {
-      'user-list': List,
-      'user-form': Form,
-      ShowUser
+      ShowUser,
+      userList,
+      userForm
     },
     data () {
       return {
-        component: 'user-list'
+        component: userList
       };
     },
     methods: {
       /**
-       * a method that changes the
+       * A method that changes the
        * component data property to
        * Form.
-       * @param {void}
-       * @returns {void}
        */
       showForm () {
-        this.component = 'user-form';
+        this.component = userForm;
       },
       /**
-       * a method that changes the
+       * A method that changes the
        * component data property to
        * List.
-       * @param {void}
-       * @returns {void}
        */
       showList () {
-        this.component = 'user-list';
+        this.component = userList;
       }
     }
   };

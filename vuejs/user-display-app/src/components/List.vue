@@ -1,3 +1,4 @@
+<!-- eslint-disable no-unused-expressions -->
 <template>
   <div>
     <table class="user-table">
@@ -32,53 +33,38 @@
      * @property {string} dob - user date of birth
      */
     // eslint-disable-next-line vue/multi-word-component-names
-    name: 'List',
+    name: 'userList',
     data () {
       return {
-        /**
-         * variable that helps in
-         * conditionally showing the
-         * ShowUser component
-         * @type {boolean}
-         */
         showMore: false,
-        /**
-         * an array of user object
-         * @type {Array<user>}
-         */
-        users: [{ id: 1, name: 'sarthak', email: 'sarthak@ymail.com', dob: '24/08/1996' },
-          { id: 2, name: 'raman', email: 'raman@gmail.com', dob: '04/01/1978' },
-          { id: 3, name: 'vritti', email: 'vritti45@gmail.com', dob: '19/09/1966' }],
-        /**
-         * user object
-         * @type {user}
-         */
         user: null
       };
+    },
+    computed: {
+      users () {
+        return this.$store.state.users;
+      }
     },
     components: {
       ShowUser
     },
     methods: {
       /**
-       * a method that gets triggered when show-
+       * A method that gets triggered when show-
        * more link is clicked. It sets the
        * user data property and toggles
        * the value of showMore variable.
        * @param {user} user - the user for which we clicked the button.
-       * @returns {void}
        */
       onShowMoreClick (user) {
         this.user = user;
         this.showMore = !this.showMore;
       },
       /**
-       * a method that gets triggered when
+       * A method that gets triggered when
        * Add User button is clicked. It
        * emits an event to the Form.vue and
        * App.vue component.
-       * @param {void}
-       * @returns {void}
        */
       showForm () {
         EventBus.$emit('clicked-add');
@@ -86,26 +72,9 @@
       }
     },
     mounted () {
+      // eslint-disable-next-line no-unused-expressions
       EventBus.$on('delete-user', (id) => {
-        const answer = prompt('press Y if you are sure you want to delete the record.');
-        if (answer === 'Y' || answer === 'y') {
-          this.users = this.users.filter(ele => ele.id !== id);
-        }
         this.showMore = false;
-      });
-      EventBus.$on('user-generated', (newEntry) => {
-        newEntry.id = this.users.length + 1;
-        this.users.push(newEntry);
-        this.$emit('user-added');
-        console.log(this.users);
-      });
-      EventBus.$on('values-edited', (editedValues) => {
-        console.log('inside values-edited');
-        const index = editedValues.id - 1;
-        this.users[index].name = editedValues.name;
-        this.users[index].email = editedValues.email;
-        this.users[index].dob = editedValues.dob;
-        this.$emit('user-edited');
       });
     }
   };
@@ -120,7 +89,6 @@
   .action-btn:hover {
     background-color: rgb(39, 171, 127);
   }
-
   .add-btn {
     background-color: pink;
     border-radius: 0.5rem;
