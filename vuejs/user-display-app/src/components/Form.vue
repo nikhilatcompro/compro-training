@@ -1,22 +1,25 @@
 <template>
   <div>
-    <form id="user-form" @submit.prevent="onSubmitClick">
+    <form id="user-form">
       <label>Name</label>
-      <input type="text" v-model="name" required/>
+      <input type="text" v-model="currentUser.name" required/>
       <label>Email</label>
-      <input type="email" v-model="email" required/>
+      <input type="email" v-model="currentUser.email" required/>
       <label>D.O.B</label>
-      <input type="text" placeholder="DD/MM/YYYY" v-model="dob" @keypress="validateDob" required/>
+      <input type="text" placeholder="DD/MM/YYYY"
+        v-model="currentUser.dob" @keypress="validateDob" required/>
       <p v-if="dobError">Invalid date</p>
-      <button v-if="editingUser" @click="onUpdateClick">Update</button>
-      <button v-if="!editingUser" :disabled="dobError">Submit</button>
+      <button v-if="editingUser" type="submit" @click="onUpdateClick()"
+        :disabled="disableUpdate()">Update</button>
+      <button v-else type="submit" @click="onSubmitClick()"
+        :disabled="disableAdd()">Submit</button>
       <button @click="onBackClick">Cancel</button>
     </form>
   </div>
 </template>
 
 <script>
-  import EventBus from '../event-bus.js';
+  import EventBus from '../event-bus';
   export default {
     name: 'userForm',
     data () {
@@ -26,7 +29,13 @@
         editingUser: false,
         email: '',
         id: 0,
-        name: ''
+        name: '',
+        currentUser: {
+          id: null,
+          name: '',
+          email: '',
+          dob: ''
+          }
       };
     },
     methods: {
@@ -35,13 +44,31 @@
        * sets the dobError data property as true or false
        */
       validateDob () {
-        const [day, month, year] = this.dob.split('/').map(item => parseInt(item));
+        const [day, month, year] = this.currentUser.dob.split('/').map(item => parseInt(item));
         console.log(day, month, year);
-        if (day < 0 || day > 31 || month < 0 || month > 12 || year < 1900 || year > 2022) {
+        if (this.currentUser.dob.length < 10 ||
+        day < 0 || day > 31 || month < 0 || month > 12 || year < 1900 || year > 2022) {
           this.dobError = true;
         } else {
           this.dobError = false;
         }
+      },
+      disableAdd () {
+        return (
+        this.currentUser.name === '' ||
+        this.currentUser.email === '' ||
+        this.currentUser.dob === '' ||
+        this.currentUser.name.length > 120 ||
+        !this.currentUser.email.includes('@') ||
+        this.dobError);
+      },
+      disableUpdate () {
+        return (
+          (this.disableAdd()) ||
+          (this.currentUser.name === this.user.name &&
+          this.currentUser.email === this.user.email &&
+          this.currentUser.dob === this.user.dob)
+        );
       },
       /**
        * A method that gets triggered when the
@@ -49,7 +76,7 @@
        * Emits an event to parent on click.
        */
       onBackClick () {
-        this.$emit('back-click'); // event back-click is also used in ShowUser.vue
+        this.$router.push('/users');
       },
       /**
        * A method that gets triggered when
@@ -58,14 +85,15 @@
        * component with the help of event bus.
        */
       onSubmitClick () {
+        console.log('inside submit click');
         const newEntry = {
           id: 0,
-          name: this.name,
-          email: this.email,
-          dob: this.dob
+          name: this.currentUser.name,
+          email: this.currentUser.email,
+          dob: this.currentUser.dob
         };
         this.$store.commit('addUser', newEntry);
-        this.$emit('user-added');
+        this.$router.push('/');
       },
       /**
        * A method that gets triggered when the update button
@@ -74,31 +102,37 @@
        * changes the update button to submit button.
        */
       onUpdateClick () {
+        console.log('inside update click');
+        this.editingUser = false;
         const editedValues = {
-          id: this.id,
-          name: this.name,
-          email: this.email,
-          dob: this.dob
+          id: this.currentUser.id,
+          name: this.currentUser.name,
+          email: this.currentUser.email,
+          dob: this.currentUser.dob
         };
         this.$store.commit('updateUser', editedValues);
+        this.$router.push('/users');
+      }
+    },
+    created () {
+      if (this.$route.name === 'edit') {
+      this.user = this.$store.state.users[this.$route.params.id - 1];
+      this.editingUser = true;
+      this.currentUser.id = this.user.id;
+      this.currentUser.name = this.user.name;
+      this.currentUser.email = this.user.email;
+      this.currentUser.dob = this.user.dob;
+      } else {
         this.editingUser = false;
-        this.$emit('user-edited');
       }
     },
     mounted () {
-      EventBus.$on('edit-user', user => {
+      EventBus.$on('edit-user', () => {
+        console.log('inside edit-user event');
         this.editingUser = true;
-        this.id = user.id;
-        this.name = user.name;
-        this.email = user.email;
-        this.dob = user.dob;
-        this.$emit('edit-form');
       });
-
-      EventBus.$on('clicked-add', () => {
-        this.name = '';
-        this.email = '';
-        this.dob = '';
+      EventBus.$on('add-user', () => {
+        this.editingUser = false;
       });
     }
   };

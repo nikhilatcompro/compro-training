@@ -20,8 +20,10 @@
   import EventBus from '../event-bus';
   export default {
     name: 'ShowUser',
-    props: {
-      user: Object
+    data () {
+      return {
+        user: null
+      };
     },
     methods: {
       /**
@@ -40,7 +42,7 @@
        */
       onDeleteClick (id) {
         this.$store.commit('deleteUser', id);
-        EventBus.$emit('delete-user', id);
+        this.$router.push('/users');
       },
       /**
        * A method that gets triggered when Edit button
@@ -49,7 +51,8 @@
        * @param {user} user - user object
        */
       onEditClick (user) {
-        EventBus.$emit('edit-user', user);
+        EventBus.$emit('edit-user');
+        this.$router.push(`/users/${user.id}/edit`);
       },
       /**
        * A method that gets triggered when Back button
@@ -58,8 +61,11 @@
        * component from DOM.
        */
       onBackClick () {
-        this.$emit('back-click');
+        this.$router.push('/users');
       }
+    },
+    created () {
+      this.user = this.$store.state.users[this.$route.params.id - 1];
     }
   };
 </script>
