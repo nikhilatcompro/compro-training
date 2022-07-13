@@ -14,15 +14,13 @@
       </tr>
     </table>
     <div>
-      <button class="add-btn" @click="showForm">Add User</button>
+      <button class="add-btn" @click="onAddUserClick">Add User</button>
     </div>
-    <ShowUser v-if="showMore" :user="user" @back-click="showMore=false"></ShowUser>
   </div>
 </template>
 
 <script>
-  import EventBus from '../event-bus.js';
-  import ShowUser from './ShowUser.vue';
+  import EventBus from '../event-bus';
   export default {
     /**
      * A user
@@ -36,7 +34,6 @@
     name: 'userList',
     data () {
       return {
-        showMore: false,
         user: null
       };
     },
@@ -44,9 +41,6 @@
       users () {
         return this.$store.state.users;
       }
-    },
-    components: {
-      ShowUser
     },
     methods: {
       /**
@@ -57,8 +51,8 @@
        * @param {user} user - the user for which we clicked the button.
        */
       onShowMoreClick (user) {
-        this.user = user;
-        this.showMore = !this.showMore;
+        // this.user = user;
+        this.$router.push(`/users/${user.id}`);
       },
       /**
        * A method that gets triggered when
@@ -66,16 +60,10 @@
        * emits an event to the Form.vue and
        * App.vue component.
        */
-      showForm () {
-        EventBus.$emit('clicked-add');
-        this.$emit('clicked-add');
+      onAddUserClick () {
+        this.$router.push('/users/new');
+        EventBus.$emit('add-user');
       }
-    },
-    mounted () {
-      // eslint-disable-next-line no-unused-expressions
-      EventBus.$on('delete-user', (id) => {
-        this.showMore = false;
-      });
     }
   };
 </script>
