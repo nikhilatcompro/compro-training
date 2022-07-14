@@ -6,20 +6,37 @@
       <label>Email</label>
       <input type="email" v-model="currentUser.email" required/>
       <label>D.O.B</label>
-      <input type="text" placeholder="DD/MM/YYYY"
-        v-model="currentUser.dob" @keypress="validateDob" required/>
+      <input
+        type="text"
+        placeholder="DD/MM/YYYY"
+        v-model="currentUser.dob"
+        @keypress="validateDob"
+        required
+      />
       <p v-if="dobError">Invalid date</p>
-      <button v-if="editingUser" type="submit" @click="onUpdateClick()"
-        :disabled="disableUpdate()">Update</button>
-      <button v-else type="submit" @click="onSubmitClick()"
-        :disabled="disableAdd()">Submit</button>
-      <button @click="onBackClick">Cancel</button>
+      <MatButton
+        v-if="editingUser"
+        text="Update"
+        type="submit"
+        @click="onUpdateClick()"
+        :disabled="disableUpdate()">
+        Update
+      </MatButton>
+      <MatButton
+        v-else
+        text="Submit"
+        type="submit"
+        @click="onSubmitClick()"
+        :disabled="disableAdd()">
+      Submit
+      </MatButton>
+      <MatButton text="Cancel" @click="onBackClick">Cancel</MatButton>
     </form>
   </div>
 </template>
 
 <script>
-  import EventBus from '../event-bus';
+  import MatButton from './MatButton.vue';
   export default {
     name: 'userForm',
     data () {
@@ -37,6 +54,9 @@
           dob: ''
           }
       };
+    },
+    components: {
+      MatButton
     },
     methods: {
       /**
@@ -125,15 +145,6 @@
       } else {
         this.editingUser = false;
       }
-    },
-    mounted () {
-      EventBus.$on('edit-user', () => {
-        console.log('inside edit-user event');
-        this.editingUser = true;
-      });
-      EventBus.$on('add-user', () => {
-        this.editingUser = false;
-      });
     }
   };
 </script>

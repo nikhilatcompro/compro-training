@@ -5,25 +5,28 @@
       <p>email: {{ user.email }}</p>
       <!-- eslint-disable-next-line vue/no-deprecated-filter -->
       <p>D.O.B: {{ user.dob | dashed-dob }}</p>
-      <button class="back-btn" @click="onBackClick">X</button>
+      <MatButton text="X" class="back-btn" @click="onBackClick">X</matButton>
     </div>
     <div class="button-div">
-      <button class="action-btn" @click="onEditClick(user)">Edit</button>
-      <button class="action-btn  delete-btn" @click="onDeleteClick(user.id)">
+      <MatButton text="Edit" class="action-btn" @click="onEditClick(user)">Edit</MatButton>
+      <MatButton text="Delete" class="action-btn  delete-btn" @click="onDeleteClick(user.id)">
         Delete
-      </button>
+      </MatButton>
     </div>
   </div>
 </template>
 
 <script>
-  import EventBus from '../event-bus';
+  import MatButton from './MatButton.vue';
   export default {
     name: 'ShowUser',
     data () {
       return {
         user: null
       };
+    },
+    components: {
+      MatButton
     },
     methods: {
       /**
@@ -51,7 +54,6 @@
        * @param {user} user - user object
        */
       onEditClick (user) {
-        EventBus.$emit('edit-user');
         this.$router.push(`/users/${user.id}/edit`);
       },
       /**
@@ -74,6 +76,7 @@
   .main-div {
     background-color: white;
     border-radius: 0.5rem;
+    box-shadow: .2rem .2rem .5rem lightgray;
     display: flex;
     flex-direction: column;
     height: 20rem;
@@ -84,10 +87,20 @@
     text-align: center;
     width: 15rem;
   }
+  .action-btn {
+    border: none;
+    margin: 1rem .5rem;
+  }
+  .action-btn:hover {
+    background-color: rgb(39, 171, 127);
+  }
   .back-btn {
     position: absolute;
     right: 2rem;
     top: 2rem;
+  }
+  .delete-btn:hover {
+    background-color: rgb(235, 36, 92);
   }
   .button-div {
     margin: 0 0 0 35rem;

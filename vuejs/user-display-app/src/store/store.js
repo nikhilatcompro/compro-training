@@ -48,8 +48,5 @@ export const store = new Vuex.Store({
       state.users[index].email = editedValues.email;
       state.users[index].dob = editedValues.dob;
     }
-    // setEditingUser (state, isEditing) {
-    //   state.editingUser = isEditing;
-    // }
   }
 });
