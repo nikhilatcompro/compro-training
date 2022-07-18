@@ -12,7 +12,7 @@
     >
       {{ moreIcon }}
     </span>
-    <MatMenu :userID="user.id" :showMoreClicked="showMoreClicked"></MatMenu>
+    <MatMenu :userID="user._id" :showMoreClicked="showMoreClicked"></MatMenu>
   </li>
 </template>
 
@@ -43,7 +43,8 @@ import MatMenu from './MatMenu.vue';
 
 <style scoped>
   .list-item {
-    position: relative;
     overflow: inherit;
+    padding: .375rem 0 .375rem 0;
+    position: relative;
   }
 </style>
