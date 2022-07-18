@@ -1,6 +1,7 @@
 <!-- eslint-disable no-unused-expressions -->
 <template>
   <div class="wrapper-div">
+    <p v-if="err">{{ err }}</p>
     <MatList
       class="user-list"
       :users="users"
@@ -22,6 +23,7 @@
 <script>
   import MatButton from './MatButton.vue';
   import MatList from './MatList.vue';
+  import UserService from '../UserService';
   export default {
     /**
      * A user
@@ -35,17 +37,14 @@
     name: 'userList',
     data () {
       return {
+        err: '',
+        users: [],
         userID: null
       };
     },
     components: {
       MatButton,
       MatList
-    },
-    computed: {
-      users () {
-        return this.$store.state.users;
-      }
     },
     methods: {
       /**
@@ -66,6 +65,18 @@
        */
       onAddUserClick () {
         this.$router.push('/users/new');
+      }
+    },
+    watch: {
+      users (newValue) {
+        return newValue;
+      }
+    },
+    async created () {
+      try {
+        this.users = await UserService.getUsers();
+      } catch (err) {
+        this.err = err.message;
       }
     }
   };
