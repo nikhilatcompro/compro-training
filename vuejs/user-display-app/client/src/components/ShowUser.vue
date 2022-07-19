@@ -4,12 +4,12 @@
       <p>Name: {{ user.name }}</p>
       <p>email: {{ user.email }}</p>
       <!-- eslint-disable-next-line vue/no-deprecated-filter -->
-      <p>D.O.B: {{ user.dob | dashed-dob }}</p>
+      <p>D.O.B: {{ user.dateOfBirth | dashed-dob }}</p>
       <MatButton text="X" class="back-btn" @click="onBackClick">X</matButton>
     </div>
     <div class="button-div">
       <MatButton text="Edit" class="action-btn" @click="onEditClick(user)">Edit</MatButton>
-      <MatButton text="Delete" class="action-btn  delete-btn" @click="onDeleteClick(user.id)">
+      <MatButton text="Delete" class="action-btn  delete-btn" @click="onDeleteClick(user._id)">
         Delete
       </MatButton>
     </div>
@@ -17,12 +17,13 @@
 </template>
 
 <script>
+  import UserService from '../UserService';
   import MatButton from './MatButton.vue';
   export default {
     name: 'ShowUser',
     data () {
       return {
-        user: null
+        user: {}
       };
     },
     components: {
@@ -44,7 +45,10 @@
        * @param {number} id - user id
        */
       onDeleteClick (id) {
-        this.$store.commit('deleteUser', id);
+        const answer = prompt('press Y if you are sure you want to delete the record.');
+        if (answer === 'Y' || answer === 'y') {
+          UserService.deleteUser(id);
+        }
         this.$router.push('/users');
       },
       /**
@@ -54,7 +58,7 @@
        * @param {user} user - user object
        */
       onEditClick (user) {
-        this.$router.push(`/users/${user.id}/edit`);
+        this.$router.push(`/users/${user._id}/edit`);
       },
       /**
        * A method that gets triggered when Back button
@@ -66,8 +70,8 @@
         this.$router.push('/users');
       }
     },
-    created () {
-      this.user = this.$store.state.users[this.$route.params.id - 1];
+    async created () {
+      this.user = await UserService.getUser(this.$route.params.id);
     }
   };
 </script>

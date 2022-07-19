@@ -37,18 +37,15 @@
 
 <script>
   import MatButton from './MatButton.vue';
+  import UserService from '../UserService';
   export default {
     name: 'userForm',
     data () {
       return {
-        dob: '',
         dobError: false,
         editingUser: false,
-        email: '',
-        id: 0,
-        name: '',
         currentUser: {
-          id: null,
+          id: '',
           name: '',
           email: '',
           dob: ''
@@ -87,7 +84,7 @@
           (this.disableAdd()) ||
           (this.currentUser.name === this.user.name &&
           this.currentUser.email === this.user.email &&
-          this.currentUser.dob === this.user.dob)
+          this.currentUser.dob === this.user.dateOfBirth)
         );
       },
       /**
@@ -107,12 +104,12 @@
       onSubmitClick () {
         console.log('inside submit click');
         const newEntry = {
-          id: 0,
           name: this.currentUser.name,
           email: this.currentUser.email,
-          dob: this.currentUser.dob
+          dateOfBirth: this.currentUser.dob
         };
-        this.$store.commit('addUser', newEntry);
+        // this.$store.commit('addUser', newEntry);
+        UserService.createUser(newEntry);
         this.$router.push('/');
       },
       /**
@@ -125,23 +122,23 @@
         console.log('inside update click');
         this.editingUser = false;
         const editedValues = {
-          id: this.currentUser.id,
           name: this.currentUser.name,
           email: this.currentUser.email,
-          dob: this.currentUser.dob
+          dateOfBirth: this.currentUser.dob
         };
-        this.$store.commit('updateUser', editedValues);
+        // this.$store.commit('updateUser', editedValues);
+        UserService.updateUser(this.currentUser.id, editedValues);
         this.$router.push('/users');
       }
     },
-    created () {
+    async created () {
       if (this.$route.name === 'edit') {
-      this.user = this.$store.state.users[this.$route.params.id - 1];
+      this.user = await UserService.getUser(this.$route.params.id);
       this.editingUser = true;
-      this.currentUser.id = this.user.id;
+      this.currentUser.id = this.user._id;
       this.currentUser.name = this.user.name;
       this.currentUser.email = this.user.email;
-      this.currentUser.dob = this.user.dob;
+      this.currentUser.dob = this.user.dateOfBirth;
       } else {
         this.editingUser = false;
       }

@@ -30,6 +30,7 @@
 
 <script>
   import { MDCMenu } from '@material/menu';
+  import UserService from '../UserService';
   export default {
     name: 'MatMenu',
     data () {
@@ -38,7 +39,7 @@
       };
     },
     props: {
-      userID: Number,
+      userID: String,
       showMoreClicked: Boolean
     },
     methods: {
@@ -46,7 +47,11 @@
         this.$router.push(`/users/${this.userID}/edit`);
       },
       onDeleteClick () {
-        this.$store.commit('deleteUser', this.userId);
+        const answer = prompt('press Y if you are sure you want to delete the record.');
+        if (answer === 'Y' || answer === 'y') {
+          console.log(this.userID);
+          UserService.deleteUser(this.userID);
+        }
       },
       onDetailsClick () {
         this.$router.push(`/users/${this.userID}`);
@@ -67,8 +72,6 @@
 <style lang="scss" scoped>
   .action-menu {
     transform-origin: top right;
-    top: 0;
-    right: 0;
     position: absolute;
   }
   .mdc-list-item__text{

@@ -12,6 +12,7 @@ const router = new VueRouter({
 
 // Filters
 Vue.filter('dashed-dob', (value) => {
+  if (!value) return value;
   return value.replaceAll('/', '-');
 });
 

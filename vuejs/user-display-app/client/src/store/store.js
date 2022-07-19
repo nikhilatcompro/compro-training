@@ -30,10 +30,6 @@ export const store = new Vuex.Store({
      * @param {number} id-user id
      */
     deleteUser: (state, id) => {
-      const answer = prompt('press Y if you are sure you want to delete the record.');
-      if (answer === 'Y' || answer === 'y') {
-        state.users = state.users.filter(ele => ele.id !== id);
-      }
     },
     /**
      * A mutation method that taked editedValues
