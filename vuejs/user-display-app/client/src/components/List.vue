@@ -1,6 +1,7 @@
 <!-- eslint-disable no-unused-expressions -->
 <template>
   <div class="wrapper-div">
+    <h1 class="page-title"> Users </h1>
     <p v-if="err">{{ err }}</p>
     <MatList
       class="user-list"
@@ -84,13 +85,7 @@
 
 <style lang="scss" scoped>
   .add-btn {
-    // margin: 3rem 0 0 25%;
     font-size: 0.875rem;
-  }
-
-  .add-btn:hover,
-  .add-btn:focus {
-    background-color: rgb(59, 0, 91);
   }
   .add-btn-div {
     margin: 3rem;
@@ -98,9 +93,21 @@
     flex-direction: row;
     justify-content: center;
   }
-  .user-list {
+  .wrapper-div {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    justify-content: center;
     margin: 0 auto;
+    width: 40rem;
+  }
+  .page-title {
+    background-color: #54c77a;
+    font-family: 'Roboto', sans-serif;
+    padding: 2rem 2rem 2rem 3rem;
+    text-align: center;
+  }
+  .user-list {
     padding: 2rem;
-    width: 50rem;
   }
 </style>

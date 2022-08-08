@@ -1,15 +1,24 @@
 <template>
-  <div>
+  <div class="main-wrapper">
     <div class="main-div">
-      <p>Name: {{ user.name }}</p>
-      <p>email: {{ user.email }}</p>
+      <div class="name-div">
+        <label class="field">Name: </label>
+        <label class="value">{{ user.name }}</label>
+      </div>
+      <div class="email-div">
+        <label class="field">Email: </label>
+        <label class="value">{{ user.email }}</label>
+      </div>
+      <div class="dob-div">
+        <label class="field">Date of birth: </label>
+        <label class="value">{{ user.dateOfBirth }}</label>
+      </div>
       <!-- eslint-disable-next-line vue/no-deprecated-filter -->
-      <p>D.O.B: {{ user.dateOfBirth | dashed-dob }}</p>
       <MatButton text="X" class="back-btn" @click="onBackClick">X</matButton>
     </div>
     <div class="button-div">
       <MatButton text="Edit" class="action-btn" @click="onEditClick(user)">Edit</MatButton>
-      <MatButton text="Delete" class="action-btn  delete-btn" @click="onDeleteClick(user._id)">
+      <MatButton text="Delete" class="action-btn  delete-btn" @click="onDeleteClick(user.id)">
         Delete
       </MatButton>
     </div>
@@ -44,10 +53,14 @@
        * component with a payload 'id'.
        * @param {number} id - user id
        */
-      onDeleteClick (id) {
+      async onDeleteClick (id) {
         const answer = prompt('press Y if you are sure you want to delete the record.');
         if (answer === 'Y' || answer === 'y') {
-          UserService.deleteUser(id);
+          try {
+            await UserService.deleteUser(id);
+          } catch (error) {
+            console.log(error);
+          }
         }
         this.$router.push('/users');
       },
@@ -58,7 +71,7 @@
        * @param {user} user - user object
        */
       onEditClick (user) {
-        this.$router.push(`/users/${user._id}/edit`);
+        this.$router.push(`/users/${user.id}/edit`);
       },
       /**
        * A method that gets triggered when Back button
@@ -71,12 +84,23 @@
       }
     },
     async created () {
-      this.user = await UserService.getUser(this.$route.params.id);
+      try {
+        this.user = await UserService.getUser(this.$route.params.id);
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
 </script>
 
 <style scoped>
+  .main-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
   .main-div {
     background-color: white;
     border-radius: 0.5rem;
@@ -85,10 +109,8 @@
     flex-direction: column;
     height: 20rem;
     justify-content: space-around;
-    margin: 2rem 0 0 35rem;
     padding: 4rem;
     position: relative;
-    text-align: center;
     width: 15rem;
   }
   .action-btn {
@@ -100,13 +122,23 @@
   }
   .back-btn {
     position: absolute;
-    right: 2rem;
-    top: 2rem;
+    right: 1.5rem;
+    top: 1.5rem;
   }
   .delete-btn:hover {
     background-color: rgb(235, 36, 92);
   }
-  .button-div {
-    margin: 0 0 0 35rem;
+  .field {
+    color: rgb(116, 114, 114);
+    display: inline-block;
+    font-size: 0.6rem;
+    font-weight: bold;
+    letter-spacing: 0.063rem;
+    margin: 1.563rem 0 0.938rem;
+    text-transform: uppercase;
   }
+  .value {
+    display: block;
+  }
+
 </style>
