@@ -1,5 +1,5 @@
 <template>
-  <button class="mdc-button mdc-button--raised" @click="onClick">
+  <button class="mdc-button mdc-button--raised btn" @click="onClick">
     <span class="mdc-button__label">{{ text }}</span>
   </button>
 </template>
@@ -24,5 +24,11 @@
 </script>
 
 <style lang="scss" scoped>
-
+  .btn {
+    background-color: #54c77a;
+  }
+  .btn:hover,
+  .btn:focus {
+    background-color: #49a869;
+  }
 </style>

@@ -1,5 +1,5 @@
 <template>
-    <div class="mdc-menu mdc-menu-surface action-menu">
+    <div class=" mdc-menu-surface action-menu">
       <ul
         class="mdc-list"
         role="menu"
@@ -72,6 +72,7 @@
 <style lang="scss" scoped>
   .action-menu {
     transform-origin: top right;
+
     position: absolute;
   }
   .mdc-list-item__text{

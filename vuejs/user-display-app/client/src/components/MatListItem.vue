@@ -1,10 +1,15 @@
 <template>
   <li class="mdc-list-item list-item">
-    <span class="material-icons" aria-hidden="true">
+    <!-- <span class="material-icons" aria-hidden="true">
       {{ personIcon }}
+    </span> -->
+    <span class="img-text-wrapper">
+      <span class="img-span">
+        <img class="user-profile" src="../../assets/Smiling-Man.jpg" alt="">
+      </span>
+  <!-- <span class="mdc-list-item__ripple"></span> -->
+      <span @click="onShowMoreClick" class="mdc-list-item__text user-name">{{ user.name }}</span>
     </span>
-    <span class="mdc-list-item__ripple"></span>
-    <span class="mdc-list-item__text">{{ user.name }}</span>
     <span
       @click="onShowMoreClick"
       class="material-icons"
@@ -12,7 +17,7 @@
     >
       {{ moreIcon }}
     </span>
-    <MatMenu :userID="user._id" :showMoreClicked="showMoreClicked"></MatMenu>
+    <MatMenu :userID="user.id" :showMoreClicked="showMoreClicked"></MatMenu>
   </li>
 </template>
 
@@ -46,5 +51,23 @@ import MatMenu from './MatMenu.vue';
     overflow: inherit;
     padding: .375rem 0 .375rem 0;
     position: relative;
+    border-radius: .5rem;
+  }
+  .img-text-wrapper {
+    height: 2rem;
+    width: 15rem;
+    display: flex;
+  }
+  .img-span {
+    height: 2rem;
+    width: 2rem;
+  }
+  .user-name {
+    margin-left: 4rem;
+  }
+  .user-profile {
+    border-radius: 100%;
+    max-height: 100%;
+    max-width: 100%;
   }
 </style>

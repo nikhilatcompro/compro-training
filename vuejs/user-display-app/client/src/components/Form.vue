@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="main-div">
     <form id="user-form">
       <label>Name</label>
       <input type="text" v-model="currentUser.name" required/>
@@ -14,6 +14,10 @@
         required
       />
       <p v-if="dobError">Invalid date</p>
+      <div>
+        <label for="user-img">Select image:</label>
+        <input type="file" id="user-img" value="img" accept="image/*">
+      </div>
       <MatButton
         v-if="editingUser"
         text="Update"
@@ -38,6 +42,7 @@
 <script>
   import MatButton from './MatButton.vue';
   import UserService from '../UserService';
+  import { uuid } from 'vue-uuid';
   export default {
     name: 'userForm',
     data () {
@@ -104,11 +109,11 @@
       onSubmitClick () {
         console.log('inside submit click');
         const newEntry = {
+          id: uuid.v1(),
           name: this.currentUser.name,
           email: this.currentUser.email,
           dateOfBirth: this.currentUser.dob
         };
-        // this.$store.commit('addUser', newEntry);
         UserService.createUser(newEntry);
         this.$router.push('/');
       },
@@ -126,7 +131,6 @@
           email: this.currentUser.email,
           dateOfBirth: this.currentUser.dob
         };
-        // this.$store.commit('updateUser', editedValues);
         UserService.updateUser(this.currentUser.id, editedValues);
         this.$router.push('/users');
       }
@@ -135,7 +139,7 @@
       if (this.$route.name === 'edit') {
       this.user = await UserService.getUser(this.$route.params.id);
       this.editingUser = true;
-      this.currentUser.id = this.user._id;
+      this.currentUser.id = this.user.id;
       this.currentUser.name = this.user.name;
       this.currentUser.email = this.user.email;
       this.currentUser.dob = this.user.dateOfBirth;
@@ -147,6 +151,12 @@
 </script>
 
 <style scoped>
+  .main-div {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
   button {
     margin: 2rem 0 0 0;
   }
@@ -155,7 +165,7 @@
     background: white;
     border-radius: 0.625rem;
     margin: 1.875rem auto;
-    max-width: 26.25rem;
+    width: 24rem;
     padding: 2.5rem;
     text-align: left;
   }
